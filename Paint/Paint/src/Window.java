@@ -41,18 +41,19 @@ public class Window extends JFrame implements ActionListener {
         BottomPanel.setLayout(new GridLayout(1,2));
         JPanel ColorPanel = new JPanel();
         JPanel FigurePanel = new JPanel();
-        ColorPanel.setLayout(new GridLayout(2,4));
-        FigurePanel.setLayout(new GridLayout(2,2));
+        ColorPanel.setLayout(new GridLayout(3,3)); /* We create the bottom panel with all the colors */
+        FigurePanel.setLayout(new GridLayout(3,2));/* We create the bottom panel with all the figures */
         JButton Red = new JButton("Red");
         Red.setBackground(Color.RED);
         JButton Blue = new JButton("Blue");
-        Blue.setForeground(Color.WHITE);
         Blue.setBackground(Color.BLUE);
         JButton Green = new JButton("Green");
         Green.setBackground(Color.GREEN);
         JButton Black = new JButton("Black");
-        Black.setForeground(Color.WHITE);
         Black.setBackground(Color.BLACK);
+        Black.setForeground(Color.WHITE);
+        JButton White= new JButton("White");
+        White.setForeground(Color.BLACK);
         JButton Orange = new JButton("Orange");
         Orange.setBackground(Color.ORANGE);
         JButton Yellow = new JButton("Yellow");
@@ -61,12 +62,18 @@ public class Window extends JFrame implements ActionListener {
         Pink.setBackground(Color.PINK);
         JButton Magenta = new JButton("Magenta");
         Magenta.setBackground(Color.MAGENTA);
-        JButton Ellipse = new JButton("Ellipse");
+        /*JButton Cyan = new JButton("Cyan");
+        Cyan.setBackground(Color.CYAN);*/
+        JButton Ellipse = new JButton("Ellipse"); /* We add the different figures*/
         JButton Square = new JButton("Square");
         JButton Rectangle = new JButton("Rectangle");
         JButton Circle =new JButton("Circle");
+        JButton UpArc = new JButton("UpArc");
+        JButton DownArc = new JButton("DownArc");
         ColorPanel.add(Red);
         ColorPanel.add(Blue);
+        /*ColorPanel.add(Cyan);*/
+        ColorPanel.add(White);
         ColorPanel.add(Black);
         ColorPanel.add(Green);
         ColorPanel.add(Orange);
@@ -77,14 +84,16 @@ public class Window extends JFrame implements ActionListener {
         FigurePanel.add(Square);
         FigurePanel.add(Rectangle);
         FigurePanel.add(Circle);
-        BottomPanel.add(ColorPanel,"East");
+        FigurePanel.add(UpArc);
+        FigurePanel.add(DownArc);
+        BottomPanel.add(ColorPanel,"East");/* We implement the color panel and the figure panel in the main bottom panel*/
         BottomPanel.add(FigurePanel,"West");
 
         contentPanel.add(BottomPanel,"South");
         contentPanel.add(draw,"Center");
         this.setVisible(true);
 
-        for(Component Button: ColorPanel.getComponents()){ /*On rend les boutons interactifs*/
+        for(Component Button: ColorPanel.getComponents()){ /*We make the buttons interactive*/
             if(Button instanceof JButton){
                 ((JButton) Button).addActionListener(this);}
             }
@@ -94,7 +103,7 @@ public class Window extends JFrame implements ActionListener {
                 ((JButton) Button).addActionListener(this);
             }
         }
-        for(Component Menu: br.getComponents()){
+        for(Component Menu: br.getComponents()){ /* We make the menu interactive*/
             for(Component Button  :((JMenu) Menu).getMenuComponents())
             if(Button instanceof JMenuItem){
                 ((JMenuItem) Button).addActionListener(this);
@@ -108,7 +117,7 @@ public class Window extends JFrame implements ActionListener {
     public void open(String filename){
         int length=0;
         Figure f=null;
-        try (FileInputStream fis = new FileInputStream("C:\\Users\\dache\\Documents\\Drawings\\"+filename);
+        try (FileInputStream fis = new FileInputStream(filename);
              ObjectInputStream ois = new ObjectInputStream(fis)){
             length = ois.readInt();
             for(int i=0;i<length;i++){
@@ -124,7 +133,7 @@ public class Window extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent e) {
         String cmd=e.getActionCommand();
-        switch(cmd){
+        switch(cmd){ /* We implement the actions for the different buttons here */
             case "Red":
                 draw.setColor(Color.RED);
                 break;
@@ -141,7 +150,6 @@ public class Window extends JFrame implements ActionListener {
                 draw.setColor(Color.BLACK);
                 break;
             case "Magenta":
-
                 draw.setColor(Color.MAGENTA);
                 break;
             case "Pink":
@@ -149,6 +157,10 @@ public class Window extends JFrame implements ActionListener {
                 break;
             case "Orange":
                 draw.setColor(Color.ORANGE);
+            case "White":
+                draw.setColor(Color.WHITE);
+            /*case "Cyan":
+                draw.setColor(Color.CYAN);*/
             case "Ellipse":
                 draw.setNameFigure("Ellipse");
                 break;
@@ -161,6 +173,12 @@ public class Window extends JFrame implements ActionListener {
             case "Circle":
                 draw.setNameFigure("Circle");
                 break;
+            case "DownArc":
+                draw.setNameFigure("DownArc");
+                break;
+            case "UpArc":
+                draw.setNameFigure("UpArc");
+                break;
             case "Save":
                 String filename = (String)JOptionPane.showInputDialog(this, "Input the name of the file",
                 "Save", JOptionPane.PLAIN_MESSAGE, null, null, "Drawing");
@@ -172,9 +190,9 @@ public class Window extends JFrame implements ActionListener {
             case "Open":
                 String filename1 = (String)JOptionPane.showInputDialog(this, "Input the name of the file",
                         "Save", JOptionPane.PLAIN_MESSAGE, null, null, "Drawing");
-                System.out.println(filename1); /* To avoid having twice the same file name and thus causing an error, we ask the user for a filename */
+                System.out.println(filename1); /* In order for the user to choose his file, we ask the user for a filename */
                 if(filename1!=null) {
-                    draw.getList().clear();
+                    draw.getList().clear(); /* We reset the figure List on order to draw the opened drawing */
                     open(filename1);
                 }
                 break;
@@ -194,7 +212,7 @@ public class Window extends JFrame implements ActionListener {
 
     }
     public static void main(){
-        Window win = new Window("Paint it black",800,600);
+        Window win = new Window("Paint",800,600);
 
     }
 }

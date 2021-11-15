@@ -7,7 +7,13 @@ public class Circle extends Ellipse {
     }
 
     public void setBoundingBox(int heightBB, int widthBB) {
-        this.width = widthBB;
-        this.height = widthBB;
+        if(widthBB>heightBB){
+            this.width = widthBB;
+            this.height = widthBB;
+        }
+        else{
+            this.height= heightBB;
+            this.width=heightBB;
+        }
     }
 }
