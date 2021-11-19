@@ -6,8 +6,14 @@ public class Circle extends Ellipse {
         super(px, py, c);
     }
 
-    public void setBoundingBox(int heightBB, int widthBB) {
-        this.width = widthBB;
-        this.height = widthBB;
+    public void setBoundingBox(int heightBB, int widthBB) { /* For the circle we decide to make the circle as big it can get and so to take the bigger number of the height and width*/
+        if(widthBB>heightBB){
+            this.width = widthBB;
+            this.height = widthBB;
+        }
+        else{
+            this.height= heightBB;
+            this.width=heightBB;
+        }
     }
 }

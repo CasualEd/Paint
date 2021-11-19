@@ -21,7 +21,7 @@ public class Rectangle extends Figure{
     }
     public void draw(Graphics g){
         g.setColor(this.getFigCol());
-        g.fillRect(super.getOrigin().getX(),super.getOrigin().getY(),this.width,this.height);
+        g.fillRect(super.getOrigin().getX(),super.getOrigin().getY(),this.width,this.height); /* We get the origin of the point to draw to the figure*/
 
     }
 }
